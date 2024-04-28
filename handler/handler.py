@@ -12,6 +12,9 @@ class SessionHandler(ABCHandler):
 
     async def _handle(self) -> bool:
         while True:
+            log_message = "Waiting for checnking iteration."
+            await logger.info(log_message)
+
             query = """
             SELECT 
                 conv_id,
@@ -24,7 +27,11 @@ class SessionHandler(ABCHandler):
             sessions = db.execute.raw(schema="toaster", query=query)
             sessions = await self._group(sessions)
 
-            log_message = f"Fetched sessions: \n  {sessions}"
+            if not sessions:
+                log_message = "There are no expired sessions."
+            else:
+                log_message = f"Fetched sessions: \n  {sessions}"
+
             await logger.info(log_message)
 
             for peer_id, cmids in sessions.items():
