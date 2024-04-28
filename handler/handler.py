@@ -48,7 +48,7 @@ class SessionHandler(ABCHandler):
     async def _group(self, session_list: tuple) -> dict:
         result = {}
         for peer_id, cmid in session_list:
-            self._expose_session(peer_id, cmid)
+            await self._expose_session(peer_id, cmid)
             cmids = result.get(peer_id, "")
             cmids += f"{cmid}, "
 
