@@ -1,3 +1,4 @@
+from vk_api import VkApiError
 from logger import logger
 from db import db
 from .abc import ABCHandler
@@ -35,20 +36,31 @@ class SessionHandler(ABCHandler):
             await logger.info(log_message)
 
             for peer_id, cmids in sessions.items():
-                self.api.messages.delete(peer_id=peer_id, cmids=cmids, delete_for_all=1)
+                try:
+                    self.api.messages.delete(
+                        peer_id=peer_id, cmids=cmids, delete_for_all=1
+                    )
+                except VkApiError:
+                    ...
 
             await asyncio.sleep(60)
 
-    @staticmethod
-    async def _group(session_list: tuple) -> dict:
+    async def _group(self, session_list: tuple) -> dict:
         result = {}
         for peer_id, cmid in session_list:
+            self._expose_session(peer_id, cmid)
             cmids = result.get(peer_id, "")
             cmids += f"{cmid}, "
 
             result[peer_id] = cmids
 
         return result
+
+    @staticmethod
+    async def _expose_session(peer_id, cmid):
+        db.execute.delete(
+            schema="toaster", table="menu_sessions", conv_id=peer_id, cm_id=cmid
+        )
 
 
 session_handler = SessionHandler()
