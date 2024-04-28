@@ -33,7 +33,7 @@ class SessionHandler(ABCHandler):
             await asyncio.sleep(60)
 
     @staticmethod
-    async def group(session_list: tuple) -> dict:
+    async def _group(session_list: tuple) -> dict:
         result = {}
         for peer_id, cmid in session_list:
             cmids = result.get(peer_id, "")
