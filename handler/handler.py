@@ -27,7 +27,7 @@ class SessionHandler(ABCHandler):
             log_message = f"Fetched sessions: \n  {sessions}"
             await logger.info(log_message)
 
-            for peer_id, cmids in sessions:
+            for peer_id, cmids in sessions.items():
                 self.api.messages.delete(peer_id=peer_id, cmids=cmids, delete_for_all=1)
 
             await asyncio.sleep(60)
