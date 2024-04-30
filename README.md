@@ -1,26 +1,75 @@
-# 🎲 APP-NAME
+# ⚙️ TOASTER.SESSION-CHECKER-SERVICE
 
-<div align="center">
-  <img src="https://i.pinimg.com/originals/08/7b/fb/087bfb3a72c8f5af8a14c7b20352dafd.gif" width="800">
-</div>
+![main_img](https://github.com/STALCRAFT-FUNCKA/toaster.message-handling-service/assets/76991612/8bb6b3bf-8385-4d4b-80cc-e104d5283a9c)
 
-## ❗ Оглавление\Contents ##
+## 📄 Информация
+**TOASTER.SESSION-CHECKER-SERVICE** - сервис, выполняющий роль "уборщика мусора".
 
-- [🎲 APP-NAME](#-app-name)
-  - [❗ Оглавление\Contents](#-оглавлениеcontents)
-  - [📄 Глава 1\Chapter 1](#-глава-1chapter-1)
-  - [📄 Глава 2\Chapter 2](#-глава-2chapter-2)
-  - [📄 Глава 3\Chapter 3](#-глава-3chapter-3)
-  - [📄 Глава 4\Chapter 4](#-глава-4chapter-4)
+В процессе работы TOASTER будут создаваться кнопочные меню, которые по-хорошему необходимо удалять через некоторое время.
 
-## 📄 Глава 1\Chapter 1 ##
-Просто какой-то текст\Samplem text.
+Сервис раз в 1 минуту проверяет таблицу БД с информацией о текущихз сессиях и пытается найти те, которые уже должны быть просрочены. После чего он благополучно удаляет сообщения с сессиями меню.
 
-## 📄 Глава 2\Chapter 2 ##
-Просто какой-то текст\Samplem text.
+### Дополнительно
+Docker stup:
+```
+docker network
+    name: TOASTER
+    ip_gateway: 172.18.0.1
+    subnet: 172.18.0.0/16
+    driver: bridge
 
-## 📄 Глава 3\Chapter 3 ##
-Просто какой-то текст\Samplem text.
 
-## 📄 Глава 4\Chapter 4 ##
-Просто какой-то текст\Samplem text.
+docker image
+    name: toaster.session-checker-service
+    args:
+        TOKEN: "..."
+        GROUPID: "..."
+        SQL_HOST: "..."
+        SQL_PORT: "..."
+        SQL_USER: "..."
+        SQL_PSWD: "..."
+
+
+docker container
+    name: toaster.session-checker-service
+    network_ip: 172.1.08.10
+
+docker volumes:
+    /var/log/TOASTER/toaster.session-checker-service:/service/logs
+```
+
+Jenkins shell command:
+```
+imageName="toaster.session-checker-service"
+containerName="toaster.session-checker-service"
+localIP="172.18.0.10"
+networkName="TOASTER"
+
+#stop and remove old container
+docker stop $containerName || true && docker rm -f $containerName || true
+
+#remove old image
+docker image rm $imageName || true
+
+#build new image
+docker build . -t $imageName \
+--build-arg TOKEN=$TOKEN \
+--build-arg GROUPID=$GROUPID \
+--build-arg SQL_HOST=$SQL_HOST \
+--build-arg SQL_PORT=$SQL_PORT \
+--build-arg SQL_USER=$SQL_USER \
+--build-arg SQL_PSWD=$SQL_PSWD
+
+#run container
+docker run -d \
+--name $containerName \
+--volume /var/log/TOASTER/$imageName:/service/logs \
+--restart always \
+$imageName
+
+#network setup
+docker network connect --ip $localIP $networkName $containerName
+
+#clear chaches
+docker system prune -f
+```
