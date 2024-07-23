@@ -35,16 +35,16 @@ def get_expired_sessions(session: Session) -> ExpiredSessions:
 
     from loguru import logger
 
-    for bpid in peers:
+    for peer in peers:
         cmids = []
 
-        logger.debug(f"checking {bpid}")
+        logger.debug(f"checking {peer.id}")
 
         expired_sessions = (
             session.query(MenuSession)
             .filter(
                 MenuSession.expired <= datetime.now(),
-                MenuSession.bpid == bpid,
+                MenuSession.bpid == peer.id,
             )
             .all()
         )
@@ -57,7 +57,7 @@ def get_expired_sessions(session: Session) -> ExpiredSessions:
         for expired_session in expired_sessions:
             cmids.append(expired_session.cmid)
 
-        peer_expired_sessions = (bpid, cmids)
+        peer_expired_sessions = (peer.id, cmids)
         result.append(peer_expired_sessions)
 
     return result
