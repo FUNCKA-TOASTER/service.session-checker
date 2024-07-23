@@ -29,6 +29,9 @@ def close_menu_session(session: Session, bpid: int, cmid: int) -> None:
 def get_expired_sessions(session: Session) -> ExpiredSessions:
     result = []
     peers = session.query(Peer).filter(Peer.mark == PeerMark.CHAT).all()
+    if not peers:
+        return result
+
     for peer in peers:
         cmids = []
         expired_sessions = (
