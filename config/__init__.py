@@ -4,25 +4,20 @@ About:
 """
 
 from .config import (
+    SERVICE_NAME,
     TOKEN,
     GROUP_ID,
-    SERVICE_NAME,
     API_VERSION,
-    MY_SQL_HOST,
-    MY_SQL_PORT,
-    MY_SQL_PSWD,
-    MY_SQL_USER,
+    ALCHEMY_SETUP,
+    DBMS_CREDS,
 )
 
 
 __all__ = (
-    "QUEUE_BROKER_IP",
+    "SERVICE_NAME",
     "TOKEN",
     "GROUP_ID",
-    "SERVICE_NAME",
     "API_VERSION",
-    "MY_SQL_HOST",
-    "MY_SQL_PORT",
-    "MY_SQL_PSWD",
-    "MY_SQL_USER",
+    "ALCHEMY_SETUP",
+    "DBMS_CREDS",
 )
