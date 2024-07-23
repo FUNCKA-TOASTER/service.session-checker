@@ -29,16 +29,27 @@ def close_menu_session(session: Session, bpid: int, cmid: int) -> None:
 def get_expired_sessions(session: Session) -> ExpiredSessions:
     result = []
     peers = session.query(Peer).filter(Peer.mark == PeerMark.CHAT).all()
+
     if not peers:
         return result
 
-    for peer in peers:
+    from loguru import logger
+
+    for bpid in peers:
         cmids = []
+
+        logger.debug(f"checking {bpid}")
+
         expired_sessions = (
             session.query(MenuSession)
-            .filter(MenuSession.expired <= datetime.now())
+            .filter(
+                MenuSession.expired <= datetime.now(),
+                MenuSession.bpid == bpid,
+            )
             .all()
         )
+
+        logger.debug(f"received {len(expired_sessions)} sessions.")
 
         if not expired_sessions:
             continue
@@ -46,7 +57,7 @@ def get_expired_sessions(session: Session) -> ExpiredSessions:
         for expired_session in expired_sessions:
             cmids.append(expired_session.cmid)
 
-        peer_expired_sessions = (peer, cmids)
+        peer_expired_sessions = (bpid, cmids)
         result.append(peer_expired_sessions)
 
     return result
