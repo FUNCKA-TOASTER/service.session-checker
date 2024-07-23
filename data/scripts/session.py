@@ -33,12 +33,8 @@ def get_expired_sessions(session: Session) -> ExpiredSessions:
     if not peers:
         return result
 
-    from loguru import logger
-
     for peer in peers:
         cmids = []
-
-        logger.debug(f"checking {peer.id}")
 
         expired_sessions = (
             session.query(MenuSession)
@@ -48,8 +44,6 @@ def get_expired_sessions(session: Session) -> ExpiredSessions:
             )
             .all()
         )
-
-        logger.debug(f"received {len(expired_sessions)} sessions.")
 
         if not expired_sessions:
             continue
