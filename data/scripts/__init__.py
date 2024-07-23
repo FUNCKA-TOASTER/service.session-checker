@@ -26,6 +26,7 @@ from .delay import (
 from .session import (
     open_menu_session,
     close_menu_session,
+    get_expired_sessions,
 )
 from .url import insert_pattern
 from .cursed import insert_cursed
@@ -52,4 +53,5 @@ __all__ = (
     "get_log_peers",
     "open_menu_session",
     "close_menu_session",
+    "get_expired_sessions",
 )
