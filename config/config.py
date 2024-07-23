@@ -25,6 +25,8 @@ GROUP_ID: int = int(os.getenv("GROUPID"))
 # API version used for API requests
 API_VERSION: str = "5.199"
 
+# Delay between checking iterrations in seconds
+ITERRATION_DELAY = 60
 
 # Setup for sqlalchemy. Driver, Database and DBMS.
 ALCHEMY_SETUP = AlchemySetup(

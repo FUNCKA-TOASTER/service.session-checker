@@ -10,6 +10,7 @@ from .config import (
     API_VERSION,
     ALCHEMY_SETUP,
     DBMS_CREDS,
+    ITERRATION_DELAY,
 )
 
 
@@ -20,4 +21,5 @@ __all__ = (
     "API_VERSION",
     "ALCHEMY_SETUP",
     "DBMS_CREDS",
+    "ITERRATION_DELAY",
 )
