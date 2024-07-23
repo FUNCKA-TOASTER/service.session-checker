@@ -1,66 +1,55 @@
-from vk_api import VkApiError
-from logger import logger
-from db import db
-from .abc import ABCHandler
-import asyncio
+from typing import Any
+from vk_api import VkApi
+from loguru import logger
+from data import TOASTER_DB
+from data.scripts import (
+    close_menu_session,
+    get_expired_sessions,
+)
+import config
 
 
-class SessionHandler(ABCHandler):
-    """Event handler class that recognizes commands
-    in the message and executing attached to each command
-    actions.
-    """
+class SessionHandler:
+    """DOCSTRING"""
 
-    async def _handle(self) -> bool:
-        while True:
-            log_message = "Waiting for checnking iteration."
-            await logger.info(log_message)
+    def __call__(self) -> None:
+        try:
+            reqsponse = self._execute()
+            logger.info(reqsponse)
 
-            query = """
-            SELECT 
-                conv_id,
-                cm_id 
-            FROM 
-                menu_sessions
-            WHERE
-                expired <= NOW();
-            """
-            sessions = db.execute.raw(schema="toaster", query=query)
-            sessions = await self._group(sessions)
+        except Exception as error:
+            logger.error(error)
 
-            if not sessions:
-                log_message = "There are no expired sessions."
-            else:
-                log_message = f"Fetched sessions: \n  {sessions}"
+        finally:
+            logger.info("Waiting for next checnking iteration...")
 
-            await logger.info(log_message)
+    def _execute(self) -> str:
+        sessions = get_expired_sessions(db_instance=TOASTER_DB)
 
-            for peer_id, cmids in sessions.items():
-                try:
-                    self.api.messages.delete(
-                        peer_id=peer_id, cmids=cmids, delete_for_all=1
-                    )
-                except VkApiError:
-                    ...
+        if not sessions:
+            return "No expired sessions."
 
-            await asyncio.sleep(60)
+        api = self._get_api()
+        for bpid, cmids in sessions:
+            for cmid in cmids:
+                close_menu_session(
+                    db_instance=TOASTER_DB,
+                    bpid=bpid,
+                    cmid=cmid,
+                )
 
-    async def _group(self, session_list: tuple) -> dict:
-        result = {}
-        for peer_id, cmid in session_list:
-            await self._expose_session(peer_id, cmid)
-            cmids = result.get(peer_id, "")
-            cmids += f"{cmid}, "
+            api.messages.delete(
+                peer_id=bpid,
+                cmids=cmids,
+                delete_for_all=1,
+            )
 
-            result[peer_id] = cmids
+        response = f"Closed {len(sessions)} sessions."
+        return response
 
-        return result
-
-    @staticmethod
-    async def _expose_session(peer_id, cmid):
-        db.execute.delete(
-            schema="toaster", table="menu_sessions", conv_id=peer_id, cm_id=cmid
+    def _get_api(self) -> Any:
+        session = VkApi(
+            token=config.TOKEN,
+            api_version=config.API_VERSION,
         )
-
-
-session_handler = SessionHandler()
+        return session.get_api()

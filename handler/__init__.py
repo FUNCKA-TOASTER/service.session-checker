@@ -1,6 +1,6 @@
 """_summary_"""
 
-from .handler import session_handler
+from .handler import SessionHandler
 
 
-__all__ = ("session_handler",)
+__all__ = ("SessionHandler",)
