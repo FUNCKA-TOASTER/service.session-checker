@@ -1,11 +1,4 @@
-"""Service "toaster.comman-handling-service".
-About:
-    ...
-
-Author:
-    Oidaho (Ruslan Bashinskii)
-    oidahomain@gmail.com
-"""
+"""Service "toaster.comman-handling-service"."""
 
 import sys
 import time
@@ -25,7 +18,7 @@ def setup_logger() -> None:
     )
 
 
-def main():
+def main() -> None:
     """Entry point."""
 
     setup_logger()
