@@ -1,3 +1,13 @@
+"""Module "scripts".
+
+File:
+    setting.py
+
+About:
+    File describing custom SQLA scripts associated
+    with the settings.
+"""
+
 from typing import Dict, Optional
 from sqlalchemy.orm import Session
 from toaster.database import script
@@ -18,6 +28,12 @@ def get_destinated_settings_status(
     )
     result = {setting.name: setting.status for setting in settings}
     return result
+
+
+@script(auto_commit=False, debug=True)
+def get_setting_status(session: Session, bpid: int, name: str) -> SettingStatus:
+    setting = session.get(Setting, {"bpid": bpid, "name": name})
+    return setting.status if setting else SettingStatus.inactive
 
 
 @script(auto_commit=False, debug=True)
