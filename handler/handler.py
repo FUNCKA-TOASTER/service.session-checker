@@ -1,8 +1,8 @@
 from typing import Any
 from vk_api import VkApi
 from loguru import logger
-from data import TOASTER_DB
-from data.scripts import (
+from db import TOASTER_DB
+from toaster_utils.scripts import (
     close_menu_session,
     get_expired_sessions,
 )

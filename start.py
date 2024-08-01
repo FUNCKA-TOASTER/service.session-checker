@@ -4,7 +4,6 @@ import sys
 import time
 import config
 from loguru import logger
-from data import TOASTER_DB
 from handler import SessionHandler
 
 
@@ -22,7 +21,6 @@ def main() -> None:
     """Entry point."""
 
     setup_logger()
-    TOASTER_DB.create_tables()
     start_checking = SessionHandler()
 
     logger.info("Starting session checking...")
