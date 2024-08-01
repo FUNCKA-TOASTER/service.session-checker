@@ -1,9 +1,9 @@
 [tool.poetry]
 package-mode = false
-name = "toaster.session-checker-service"
+name = "service.session-checker"
 version = "0.2.0"
-description = "Microservice of the TOASTER bot, responsible for processing and calling commands."
-repository = "https://github.com/STALCRAFT-FUNCKA/toaster.session-checker-service"
+description = "TOASTER bot service."
+repository = "https://github.com/STALCRAFT-FUNCKA/service.session-checker"
 documentation = "https://github.com/STALCRAFT-FUNCKA/TOASTER/wiki"
 authors = [
     "Oidaho <oidahomain@gmail.com>"
