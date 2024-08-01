@@ -1,3 +1,13 @@
+"""Module "scripts".
+
+File:
+    peer.py
+
+About:
+    File describing custom SQLA scripts associated
+    with the peer.
+"""
+
 from typing import Optional, List
 from sqlalchemy.orm import Session
 from toaster.database import script
@@ -36,6 +46,6 @@ def drop_peer_mark(session: Session, bpid: int) -> None:
 
 
 @script(auto_commit=False, debug=True)
-def get_log_peers(session: Session) -> List[str]:
+def get_log_peers(session: Session) -> List[int]:
     peers = session.query(Peer).filter(Peer.mark == PeerMark.LOG).all()
     return [peer.id for peer in peers]
