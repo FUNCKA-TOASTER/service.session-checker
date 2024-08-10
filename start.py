@@ -1,4 +1,12 @@
-"""Service "toaster.comman-handling-service"."""
+"""Service "service.session-checker".
+
+File:
+    start.py
+
+About:
+    This service is responsible for checking and deleting
+    expired menu sessions.
+"""
 
 import sys
 import time
@@ -18,7 +26,7 @@ def setup_logger() -> None:
 
 
 def main() -> None:
-    """Entry point."""
+    """Program entry point."""
 
     setup_logger()
     start_checking = SessionHandler()

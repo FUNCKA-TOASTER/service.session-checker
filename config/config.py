@@ -4,7 +4,8 @@ File:
     config.py
 
 About:
-    ...
+    This file defines the used variables
+    and configuration objects.
 """
 
 import os

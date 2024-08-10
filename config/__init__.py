@@ -1,6 +1,10 @@
 """Module "config".
+
+File:
+    __init__.py
+
 About:
-    Service configurations and settings.
+    Initializing the "config" module.
 """
 
 from .config import (

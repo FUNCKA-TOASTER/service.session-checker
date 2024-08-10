@@ -1,3 +1,12 @@
+"""Module "handler".
+
+File:
+    handler.py
+
+About:
+    File describing session handler class.
+"""
+
 from typing import Any
 from vk_api import VkApi
 from loguru import logger
@@ -10,7 +19,7 @@ import config
 
 
 class SessionHandler:
-    """DOCSTRING"""
+    """Session handler class"""
 
     def __call__(self) -> None:
         try:

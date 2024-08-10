@@ -1,17 +1,20 @@
-# ⚙️ TOASTER.SESSION-CHECKER-SERVICE
+# ⚙️ SERVICE.SESSION-CHECKER
 
-![main_img](https://github.com/STALCRAFT-FUNCKA/toaster.message-handling-service/assets/76991612/8bb6b3bf-8385-4d4b-80cc-e104d5283a9c)
+![main_img](https://github.com/FUNCKA-TOASTER/service.session-checker/assets/76991612/8bb6b3bf-8385-4d4b-80cc-e104d5283a9c)
 
 ## 📄 Информация
-**TOASTER.SESSION-CHECKER-SERVICE** - сервис, выполняющий роль "уборщика мусора".
+
+**SERVICE.SESSION-CHECKER** - сервис, выполняющий роль "уборщика мусора".
 
 В процессе работы TOASTER будут создаваться кнопочные меню, которые по-хорошему необходимо удалять через некоторое время.
 
-Сервис раз в 1 минуту проверяет таблицу БД с информацией о текущих сессиях и пытается найти те, которые уже должны быть просрочены. После чего он благополучно удаляет сообщения с сессиями меню.
+Сервис раз в 1 минуту проверяет таблицу БД с информацией о текущих сессиях и пытается найти те, которые уже должны быть просрочены, после чего эти сообщения с сессиями меню удаляются.
 
 ### Дополнительно
+
 Docker stup:
-```
+
+```shell
 docker network
     name: TOASTER
     ip_gateway: 172.18.0.1
@@ -20,7 +23,7 @@ docker network
 
 
 docker image
-    name: toaster.session-checker-service
+    name: service.session-checker
     args:
         TOKEN: "..."
         GROUPID: "..."
@@ -31,17 +34,15 @@ docker image
 
 
 docker container
-    name: toaster.session-checker-service
+    name: service.session-checker
     network_ip: 172.1.08.10
-
-docker volumes:
-    /var/log/TOASTER/toaster.session-checker-service:/service/logs
 ```
 
 Jenkins shell command:
-```
-imageName="toaster.session-checker-service"
-containerName="toaster.session-checker-service"
+
+```shell
+imageName="service.session-checker"
+containerName="service.session-checker"
 localIP="172.18.0.10"
 networkName="TOASTER"
 

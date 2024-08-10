@@ -3,8 +3,8 @@ package-mode = false
 name = "service.session-checker"
 version = "0.2.0"
 description = "TOASTER bot service."
-repository = "https://github.com/STALCRAFT-FUNCKA/service.session-checker"
-documentation = "https://github.com/STALCRAFT-FUNCKA/TOASTER/wiki"
+repository = "https://github.com/FUNCKA-TOASTER/service.session-checker"
+documentation = "https://github.com/FUNCKA-TOASTER/TOASTER/wiki"
 authors = [
     "Oidaho <oidahomain@gmail.com>"
 ]
