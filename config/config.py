@@ -33,7 +33,7 @@ ITERRATION_DELAY = 60
 ALCHEMY_SETUP = AlchemySetup(
     dialect="mysql",
     driver="pymysql",
-    database="toaster_dev",  # TODO: Позже заменить на toaster
+    database=os.getenv("DATABASE"),
 )
 
 # DBMS credentials that includes host, port, user, password.
