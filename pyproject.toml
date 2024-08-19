@@ -18,6 +18,7 @@ python = "^3.10"
 vk-api = "^11.9.9"
 toaster = {git = "https://github.com/FUNCKA-TOASTER/package.toaster", branch="main"}
 toaster_utils = {git = "https://github.com/FUNCKA-TOASTER/package.toaster-utils", branch="main"}
+apscheduler = "^3.10.4"
 
 
 [build-system]
