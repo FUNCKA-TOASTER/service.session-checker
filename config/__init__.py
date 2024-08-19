@@ -8,7 +8,6 @@ About:
 """
 
 from .config import (
-    SERVICE_NAME,
     TOKEN,
     GROUP_ID,
     API_VERSION,
@@ -19,7 +18,6 @@ from .config import (
 
 
 __all__ = (
-    "SERVICE_NAME",
     "TOKEN",
     "GROUP_ID",
     "API_VERSION",

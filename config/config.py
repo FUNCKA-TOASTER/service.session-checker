@@ -14,8 +14,6 @@ from toaster.credentials import (
     AlchemySetup,
 )
 
-# Service name used for identification
-SERVICE_NAME = "toaster.session-checker-service"
 
 # API token obtained from environment variable
 TOKEN: str = os.getenv("TOKEN")
