@@ -33,6 +33,8 @@ def setup_scheduler(job: Callable) -> BlockingScheduler:
         second=0,
     )
 
+    return scheduler
+
 
 def main() -> None:
     """Program entry point."""
