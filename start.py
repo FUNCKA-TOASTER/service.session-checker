@@ -9,10 +9,10 @@ About:
 """
 
 import sys
-import time
-import config
+from typing import Callable
 from loguru import logger
 from handler import SessionHandler
+from apscheduler.schedulers.blocking import BlockingScheduler
 
 
 def setup_logger() -> None:
@@ -25,16 +25,25 @@ def setup_logger() -> None:
     )
 
 
+def setup_scheduler(job: Callable) -> BlockingScheduler:
+    scheduler = BlockingScheduler()
+    scheduler.add_job(
+        func=job,
+        trigger="cron",
+        second=0,
+    )
+
+
 def main() -> None:
     """Program entry point."""
 
     setup_logger()
-    start_checking = SessionHandler()
+    check_sessions = SessionHandler()
+
+    scheduler = setup_scheduler(job=check_sessions)
 
     logger.info("Starting session checking...")
-    while True:
-        start_checking()
-        time.sleep(config.ITERRATION_DELAY)
+    scheduler.start()
 
 
 if __name__ == "__main__":
