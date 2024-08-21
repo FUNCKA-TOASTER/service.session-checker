@@ -11,7 +11,7 @@ from typing import Any
 from vk_api import VkApi
 from loguru import logger
 from db import TOASTER_DB
-from toaster_utils.scripts import (
+from toaster.scripts import (
     close_menu_session,
     get_expired_sessions,
 )
