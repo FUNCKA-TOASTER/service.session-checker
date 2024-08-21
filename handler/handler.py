@@ -11,6 +11,7 @@ from typing import Any
 from vk_api import VkApi
 from loguru import logger
 from db import TOASTER_DB
+from funcka_bots.handler import ABCHandler
 from toaster.scripts import (
     close_menu_session,
     get_expired_sessions,
@@ -18,10 +19,10 @@ from toaster.scripts import (
 import config
 
 
-class SessionHandler:
+class SessionHandler(ABCHandler):
     """Session handler class"""
 
-    def __call__(self) -> None:
+    def __call__(self, _) -> None:
         try:
             reqsponse = self._execute()
             logger.info(reqsponse)
