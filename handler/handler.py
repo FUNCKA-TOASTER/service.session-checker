@@ -22,7 +22,7 @@ import config
 class SessionHandler(ABCHandler):
     """Session handler class"""
 
-    def __call__(self, _) -> None:
+    def __call__(self, _=None) -> None:
         try:
             reqsponse = self._execute()
             logger.info(reqsponse)
