@@ -8,20 +8,16 @@ About:
 """
 
 from .config import (
-    TOKEN,
-    GROUP_ID,
-    API_VERSION,
-    ALCHEMY_SETUP,
-    DBMS_CREDS,
+    VK_GROUP_TOKEN,
+    VK_GROUP_ID,
+    VK_API_VERSION,
     ITERRATION_DELAY,
 )
 
 
 __all__ = (
-    "TOKEN",
-    "GROUP_ID",
-    "API_VERSION",
-    "ALCHEMY_SETUP",
-    "DBMS_CREDS",
+    "VK_GROUP_TOKEN",
+    "VK_GROUP_ID",
+    "VK_API_VERSION",
     "ITERRATION_DELAY",
 )
